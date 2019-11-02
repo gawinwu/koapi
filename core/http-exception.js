@@ -3,11 +3,11 @@
  * 异常基类
  * @class HttpException
  * errorCode : 自定义错误码
- * code : http状态码，用于 ctx.status
+ * code : 返回http状态码，用于 ctx.status
  * @extends {Error}
  */
 class HttpException extends Error {
-    constructor(msg = '服务器这会打盹了', errorCode = 10000, code = 400) {
+    constructor(msg = '你在干嘛呢？', errorCode = 10000, code = 400) {
         super()
         this.errorCode = errorCode
         this.code = code

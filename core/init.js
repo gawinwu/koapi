@@ -8,7 +8,15 @@ class InitManager {
         InitManager.app = app
         InitManager.initLoadRouters()
         InitManager.loadHttpException()
+        InitManager.loadConfig()
     }
+    static loadConfig(path = '') {
+        // 全局配置
+        const configPath = path || process.cwd() + '/config/config.js'
+        const config = require(configPath)
+        global.config = config
+    }
+
     static initLoadRouters() {
         // requireDirectory路由自动加载
         const apiDirectory = `${process.cwd()}/app/api`
