@@ -36,3 +36,5 @@ app.js 修改
 git branch -D router-auto-load
 git push origin --delete router-auto-load
 ```
+
+添加github分支:validator 
