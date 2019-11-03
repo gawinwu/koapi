@@ -38,3 +38,5 @@ git push origin --delete router-auto-load
 ```
 
 添加github分支：validator 
+
+添加github分支：skeleton
