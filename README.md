@@ -35,10 +35,45 @@ middlewares\auth.js
 core\util.js
 app\api\v1\classic.js 
 // 第十行 new Auth(9).m, 测试Auth 
-// 公 用API 不加入 new Auth().m 中间件即可
+// 公用 API 不加入 new Auth().m 中间件即可
 // 权限分级 与 扩展 设计在auth.js
 middlewares\auth.js
 ```
+
+#### postman 测试
+注册用户：
+```
+post http://localhost:3000/v1/user/register
+Body->raw->json:
+{
+	"nickname":"gawin",
+	"password1": "123456abc",
+	"password2": "123456abc",
+	"email": "1234567@qq.com"
+}
+```
+用户登录：
+```
+post http://localhost:3000/v1/token
+Body->raw->json:
+{
+	"account" : "1234567@qq.com",
+	"type": 101,
+	"secret": "123456abc"
+}
+```
+权限测试：
+```
+post http://localhost:3000/v1/classic/latest
+Authorization->type:Basic Auth -> Username = token
+http://localhost:3000/v1/token 获取的token
+```
+
+公开的API例子
+```
+get http://localhost:3000/v1/book/latest
+```
+
 
 #### 此分支不包含的内容
 微信登录，其它第三方登录, 具体业务
