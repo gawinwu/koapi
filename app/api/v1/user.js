@@ -18,5 +18,11 @@ router.post('/register', async (ctx) => {
     success()
 })
 
+// Test
+router.get('/all', async (ctx) => {
+    const users = await User.findAll()
+    ctx.body = users
+})
+
 
 module.exports = router
