@@ -8,7 +8,7 @@ const { Auth } = require('../../../middlewares/auth')
 
 // 
 router.get('/latest', new Auth().m, async (ctx, next) => {
-    ctx.body = ctx.auth.uid
+    ctx.body = ctx.auth.uid + ' scpoe:' + ctx.auth.scope
 
 })
 
