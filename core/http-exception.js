@@ -1,13 +1,13 @@
 
 /**
- * 异常基类
+ * 全局异常处理
  * @class HttpException
  * errorCode : 自定义错误码
  * code : 返回http状态码，用于 ctx.status
- * @extends {Error}
+ * @extends {Error}  继承 node Error interface
  */
 class HttpException extends Error {
-    constructor(msg = '你在干嘛呢？', errorCode = 10000, code = 400) {
+    constructor(msg = '服务器异常', errorCode = 10000, code = 400) {
         super()
         this.errorCode = errorCode
         this.code = code
@@ -20,8 +20,8 @@ class HttpException extends Error {
  * @class ParameterException
  * @extends {ParameterException}
  */
-class ParameterException extends HttpException{
-    constructor(msg,errorCode){
+class ParameterException extends HttpException {
+    constructor(msg, errorCode) {
         super()
         this.code = 400
         this.msg = msg || '参数错误'
@@ -29,7 +29,47 @@ class ParameterException extends HttpException{
     }
 }
 
+
+class Success extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.code = 201
+        this.msg = msg || 'ok'
+        this.errorCode = errorCode || 0
+    }
+}
+
+class NotFound extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.msg = msg || '资源未找到'
+        this.errorCode = errorCode || 10000
+        this.code = 404
+    }
+}
+class AuthFailed extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.msg = msg || '授权失败'
+        this.errorCode = errorCode || 10004
+        this.code = 401
+    }
+}
+
+class Forbbiden extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.msg = msg || '禁止访问'
+        this.errorCode = errorCode || 10006
+        this.code = 403
+    }
+}
+
 module.exports = {
     HttpException,
-    ParameterException
+    ParameterException,
+    Success,
+    NotFound,
+    AuthFailed,
+    Forbbiden
 }

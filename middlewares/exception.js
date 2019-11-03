@@ -5,11 +5,15 @@ const catchError = async (ctx, next) => {
     try {
         await next()
     } catch (error) {
-        if (global.config.environment === 'dev') {
+        const isHttpException = error instanceof HttpException
+        const isDev = global.config.environment === 'dev'
+
+        // 开发环境 并且 不是自定义的异常处理 HttpException
+        if (isDev && !isHttpException) {
             throw error
         }
-
-        if (error instanceof HttpException) {
+        
+        if (isHttpException) {
             ctx.body = {
                 msg: error.msg,
                 error_code: error.errorCode,
@@ -23,6 +27,7 @@ const catchError = async (ctx, next) => {
                 error_code: 999,
                 request: `${ctx.method} ${ctx.path}`
             }
+            ctx.status = 500
         }
     }
 }
