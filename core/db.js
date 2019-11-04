@@ -19,7 +19,7 @@ const sequelize = new Sequelize(dbName, user, password, {
         createdAt: 'created_at',
         updatedAt: 'updated_at',
         deletedAt: 'deleted_at',
-        // underscored:true, // 将默认的驼峰命名修改为下划线
+        underscored:true, // 将默认的驼峰命名修改为下划线
         freezeTableName:true, // 默认false修改表名为复数，true不修改表名，与数据库表名同步
     }
 })

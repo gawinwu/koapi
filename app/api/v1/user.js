@@ -19,10 +19,10 @@ router.post('/register', async (ctx) => {
 })
 
 // Test
-router.get('/all', async (ctx) => {
-    const users = await User.findAll()
-    ctx.body = users
-})
+// router.get('/all', async (ctx) => {
+//     const users = await User.findAll()
+//     ctx.body = users
+// })
 
 
 module.exports = router

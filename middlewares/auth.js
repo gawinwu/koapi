@@ -43,7 +43,7 @@ class Auth {
         }
     }
 
-    // 验证token
+    // 给前端检测token是否有效
     static verifyToken(token) {
         try {
             jwt.verify(token, global.config.security.secretKey)

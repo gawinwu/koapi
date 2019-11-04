@@ -42,10 +42,11 @@ router.post('/', async (ctx) => {
 })
 
 router.post('/verify', async (ctx) => {
+    // 给前端检测token是否有效
     const v = await new NotEmptyValidator().validate(ctx)
     const relust = Auth.verifyToken(v.get('body.token'))
     ctx.body = {
-        relust
+        is_valid: relust
     }
 })
 
