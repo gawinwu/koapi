@@ -1,4 +1,4 @@
-const { KoiValidator, Rule } = require('../../core/koi-validator-v2')
+const { KoiValidator, Rule } = require('../../core/koi-validator')
 const { User } = require('../models/user')
 const { LoginType, ArtType } = require('../lib/enum')
 
