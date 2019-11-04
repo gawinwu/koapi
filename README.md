@@ -42,6 +42,6 @@ git push origin --delete router-auto-load
 ##### 添加github分支：skeleton
 
 ##### 完成微信登录接口
-添加github分支：skeleton-ex
+添加github分支：skeleton-wx
 
 
