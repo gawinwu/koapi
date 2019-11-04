@@ -7,6 +7,9 @@ const {
 
 const { LoginType } = require('../../lib/enum')
 const { User } = require('../../models/user')
+
+const { WXManager } = require('../../services/wx')
+
 const { generateToken } = require('../../../core/utils/util')
 const { Auth } = require('../../../middlewares/auth')
 
@@ -25,6 +28,8 @@ router.post('/', async (ctx) => {
             token = await emailLogin(v.get('body.account'), v.get('body.secret'))
             break;
         case LoginType.USER_MINI_PROGRAM:
+            // v.get('body.account') wx code
+            token = await WXManager.codeToToken(v.get('body.account'))
             break;
         case LoginType.ADMIN_EMAIL:
             break;
@@ -33,6 +38,14 @@ router.post('/', async (ctx) => {
     }
     ctx.body = {
         token
+    }
+})
+
+router.post('/verify', async (ctx) => {
+    const v = await new NotEmptyValidator().validate(ctx)
+    const relust = Auth.verifyToken(v.get('body.token'))
+    ctx.body = {
+        relust
     }
 })
 

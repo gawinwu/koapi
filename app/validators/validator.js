@@ -56,6 +56,7 @@ class RegisterValidator extends KoiValidator {
 
 }
 
+// 用户登录 验证
 class TokenValidator extends KoiValidator {
     constructor() {
         super()
@@ -89,8 +90,21 @@ class TokenValidator extends KoiValidator {
     }
 }
 
+// token 是否为空检测
+class NotEmptyValidator extends KoiValidator {
+    constructor() {
+        super()
+        this.token = [
+            new Rule('isLength', '不允许为空', {
+                min: 1
+            })
+        ]
+    }
+}
+
 module.exports = {
     PositiveIntegerValidator,
     RegisterValidator,
-    TokenValidator
+    TokenValidator,
+    NotEmptyValidator
 }
