@@ -7,7 +7,7 @@ const {
 
 const { LoginType } = require('../../lib/enum')
 const { User } = require('../../models/user')
-const { generateToken } = require('../../../core/util')
+const { generateToken } = require('../../../core/utils/util')
 const { Auth } = require('../../../middlewares/auth')
 
 const router = new Router({
