@@ -1,5 +1,6 @@
 const { Movie, Sentence, Music } = require('../models/classic')
 
+// 抽象表 ， 用于查询内容类别 
 class Art {
     static async getData(art_id, type) {
         let art = null
