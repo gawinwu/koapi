@@ -35,29 +35,33 @@
 // func1()
 
 /**---------------------------------- */
-class Base {
-    constructor() {
-        this.aaa = 123
-    }
-    get s(){
-        return this.aaa + 5
-    }
-}
-class Music extends Base {
-    constructor() {
-        super()
-        this.bbb = 789
-    }
-    show(){
-        return this.bbb + 5
-    }
-}
-const c = new Music()
-console.log(c.aaa)
-console.log(c.bbb)
-console.log(c.s)
-console.log(c.show())
+// class Base {
+//     constructor() {
+//         this.aaa = 123
+//     }
+//     get s(){
+//         return this.aaa + 5
+//     }
+// }
+// class Music extends Base {
+//     constructor() {
+//         super()
+//         this.bbb = 789
+//     }
+//     show(){
+//         return this.bbb + 5
+//     }
+// }
+// const c = new Music()
+// console.log(c.aaa)
+// console.log(c.bbb)
+// console.log(c.s)
+// console.log(c.show())
 /**---------------------------------- */
 
 
+// const validator = require('validator')
+// console.log(validator.isInt('1.0'))
+
+console.log(parseInt('F1.9L'))
 

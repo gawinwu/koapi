@@ -127,6 +127,11 @@ function checkArtType(vals) {
 }
 
 class Checker {
+    /** 更麻烦的
+     * checkType , checkArtType 强行用类实现的方式
+     * const checker = new Checker(ArtType)
+     * this.validateType = checker.check.bind(checker)
+     */
     constructor(type) {
         this.enumType = type
     }
@@ -144,13 +149,15 @@ class Checker {
 
     }
 }
+
 class LikeValidator extends PositiveIntegerValidator {
     constructor() {
         super()
         this.validateType = checkArtType
-        // const checker = new Checker(ArtType)
-        // this.validateType = checker.check.bind(checker)
     }
+}
+class ClassicValidator extends LikeValidator {
+    // 功能相同，方便使用，直接继承 
 }
 
 
@@ -159,5 +166,6 @@ module.exports = {
     RegisterValidator,
     TokenValidator,
     NotEmptyValidator,
-    LikeValidator
+    LikeValidator,
+    ClassicValidator
 }

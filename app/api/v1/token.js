@@ -10,7 +10,7 @@ const { User } = require('../../models/user')
 
 const { WXManager } = require('../../services/wx')
 
-const { generateToken } = require('../../../core/utils/util')
+const { generateToken } = require('../../../core/util')
 const { Auth } = require('../../../middlewares/auth')
 
 const router = new Router({

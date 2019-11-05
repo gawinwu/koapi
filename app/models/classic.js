@@ -1,6 +1,7 @@
 const { sequelize } = require('../../core/db')
 const { Sequelize, Model } = require('sequelize')
 
+// 实体表，不做业务处理
 const classicFields = {
     image: {
         type: Sequelize.STRING,

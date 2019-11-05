@@ -6,11 +6,13 @@ const { Flow } = require('../../models/flow')
 const { Art } = require('../../models/art')
 const { Favor } = require('../../models/favor')
 
+const { PositiveIntegerValidator, ClassicValidator } = require('../../validators/validator')
+
 const router = new Router({
     prefix: '/v1/classic'
 })
 
-// 
+// 最新
 router.get('/latest', new Auth().m, async (ctx, next) => {
     // ctx.body = ctx.auth.uid + ' scpoe:' + ctx.auth.scope
     const flow = await Flow.findOne({
@@ -25,5 +27,60 @@ router.get('/latest', new Auth().m, async (ctx, next) => {
     art.setDataValue('like_status', LikeLatest)
     ctx.body = art
 })
+
+// 下一期
+router.get('/:index/next', new Auth().m, async (ctx) => {
+    const v = await new PositiveIntegerValidator().validate(ctx, {
+        id: 'index'
+    })
+    const index = v.get('path.index')
+    const art = await getNextOrPrevious(index, 'next', ctx.auth.uid)
+    ctx.body = art
+})
+
+// 上一期
+router.get('/:index/previous', new Auth().m, async (ctx) => {
+    const v = await new PositiveIntegerValidator().validate(ctx, {
+        id: 'index'
+    })
+    const index = v.get('path.index')
+    const art = await getNextOrPrevious(index, 'previous', ctx.auth.uid)
+    ctx.body = art
+})
+
+// 点击情况
+router.get('/:type/:id/favor', new Auth().m, async ctx => {
+    const v = await new ClassicValidator().validate(ctx)
+    const id = v.get('path.id')
+    const type = parseInt(v.get('path.type'))
+
+    const art = await Art.getData(id, type)
+    if (!art) {
+        throw new global.errs.NotFound()
+    }
+    const isLike = await Favor.userLikeIt(id, type, ctx.auth.uid)
+
+    ctx.body = {
+        fav_nums: art.fav_nums,
+        like_status: isLike
+    }
+})
+
+const getNextOrPrevious = async (index, way = 'next', uid) => {
+    const number = way === 'next' ? index + 1 : index - 1
+    const flow = await Flow.findOne({
+        where: {
+            index: number
+        }
+    })
+    if (!flow) {
+        throw new global.errs.NotFound()
+    }
+    const art = await Art.getData(flow.art_id, flow.type)
+    const like = await Favor.userLikeIt(flow.art_id, flow.type, uid)
+    art.setDataValue('index', flow.index)
+    art.setDataValue('like_status', like)
+    return art
+}
 
 module.exports = router

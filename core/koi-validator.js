@@ -10,7 +10,7 @@ const {
 } = require("lodash")
 const {
     findMembers
-} = require('./utils/util')
+} = require('./util')
 
 
 class KoiValidator {
