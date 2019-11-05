@@ -35,7 +35,7 @@ class Favor extends Model {
             }
         })
         if (!favor) {
-            throw new global.errs.LikeError()
+            throw new global.errs.DislikeError()
         }
         // sequelize事务处理, sequelize的坑： 注意删除事务用法与 create 异同
         return sequelize.transaction(async t => {
