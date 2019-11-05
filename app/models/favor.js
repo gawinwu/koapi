@@ -21,7 +21,7 @@ class Favor extends Model {
             await Favor.create({
                 art_id, type, uid
             }, { transation: t })
-            const art = await Art.getData(art_id, type)
+            const art = await Art.getData(art_id, type, false)
             await art.increment('fav_nums', { by: 1, transaction: t })
             // increment + 
         })
@@ -43,7 +43,7 @@ class Favor extends Model {
                 force: false,  // force:true = 物理删除， false标记删除
                 transation: t
             })
-            const art = await Art.getData(art_id, type)
+            const art = await Art.getData(art_id, type, false)
             await art.decrement('fav_nums', { by: 1, transaction: t })
             // decrement - 
         })

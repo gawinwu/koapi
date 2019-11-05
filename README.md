@@ -55,4 +55,18 @@ require('module-alias/register')
 增加 module-alias 别名后vscode无法感知
 ```
 
+##### Sequelize scope 排除字段
+```
+core\db.js  scopes: {...)
+app\models\art.js
+static async getData(..., useScope = true) {...}
+const scope = useScope ? 'bh' : null
+await Movie.scope(scope).findOne(finder)
+// 使用scope查询的对象集，如果需要再次使用来操作数据库，比如 :
+const art = await Art.getData(art_id, type, true)
+await art.decrement('fav_nums', { by: 1, transaction: t })
+// art.decremen 将生成错误的SQL语句，这是一个Sequelize的一个Bug
+// 所以这里需要使用 useScope = false 
+```
+
 
