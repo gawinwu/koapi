@@ -1,7 +1,7 @@
 
 
 const { sequelize } = require('../../core/db')
-const { Sequelize, Model } = require('sequelize')
+const { Sequelize, Model, Op } = require('sequelize')
 const { Art } = require('./art')
 
 // 点赞业务表
@@ -55,6 +55,22 @@ class Favor extends Model {
             art_id, type, uid
         })
         return favor ? true : false
+    }
+
+    // 点赞列表
+    static async getMyClassicFavors(uid) {
+        const arts = await Favor.findAll({
+            where: {
+                uid,
+                type: {
+                    [Op.not]: 400 // 不等于400, 
+                    // []里的key 可以是个表达式, 如 let a = 'abc'; [a] = '789'
+                }
+            }
+        })
+        if (!arts) {
+            throw new global.errs.NotFound()
+        }
     }
 }
 

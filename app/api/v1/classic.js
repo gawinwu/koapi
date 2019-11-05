@@ -48,7 +48,7 @@ router.get('/:index/previous', new Auth().m, async (ctx) => {
     ctx.body = art
 })
 
-// 点击情况
+// 点赞情况
 router.get('/:type/:id/favor', new Auth().m, async ctx => {
     const v = await new ClassicValidator().validate(ctx)
     const id = v.get('path.id')
@@ -64,6 +64,12 @@ router.get('/:type/:id/favor', new Auth().m, async ctx => {
         fav_nums: art.fav_nums,
         like_status: isLike
     }
+})
+
+// 点赞列表
+router.get('/favor', new Auth().m, async ctx => {
+    const uid = ctx.auth.uid
+    
 })
 
 const getNextOrPrevious = async (index, way = 'next', uid) => {
