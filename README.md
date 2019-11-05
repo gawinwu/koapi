@@ -44,4 +44,15 @@ git push origin --delete router-auto-load
 ##### 完成微信登录接口
 添加github分支：skeleton-wx
 
+##### module-alias 别名
+```
+package.json
+ "_moduleAliases": {...}
+
+app.js
+require('module-alias/register')
+
+增加 module-alias 别名后vscode无法感知
+```
+
 

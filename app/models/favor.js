@@ -48,6 +48,14 @@ class Favor extends Model {
             // decrement - 
         })
     }
+
+    // 是否点赞过
+    static async userLikeIt(art_id, type, uid) {
+        const favor = await Favor.findOne({
+            art_id, type, uid
+        })
+        return favor ? true : false
+    }
 }
 
 Favor.init({
