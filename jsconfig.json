@@ -1,0 +1,10 @@
+{
+    "include": [
+        "app/models/**"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "sequelize"
+        ]
+    }
+}

@@ -29,5 +29,8 @@
         "@root": ".",
         "@models": "app/models",
         "@validator": "app/validators/validator.js"
+    },
+    "devDependencies": {
+        "@types/sequelize": "^4.28.6"
     }
 }
