@@ -48,28 +48,42 @@ router.get('/:index/previous', new Auth().m, async (ctx) => {
     ctx.body = art
 })
 
+// 点赞详情
+router.get('/:type/:id', new Auth().m, async ctx => {
+    const v = await new ClassicValidator().validate(ctx)
+    const id = v.get('path.id')
+    const type = parseInt(v.get('path.type'))
+
+    const artDetail =await  new Art(id, type).getDetail(ctx.auth.uid)
+    artDetail.art.setDataValue('like_status', artDetail.like_status)
+    ctx.body = artDetail.art
+})
+
 // 点赞情况
 router.get('/:type/:id/favor', new Auth().m, async ctx => {
     const v = await new ClassicValidator().validate(ctx)
     const id = v.get('path.id')
     const type = parseInt(v.get('path.type'))
 
-    const art = await Art.getData(id, type)
-    if (!art) {
-        throw new global.errs.NotFound()
-    }
-    const isLike = await Favor.userLikeIt(id, type, ctx.auth.uid)
-
+    // const art = await Art.getData(id, type)
+    // if (!art) {
+    //     throw new global.errs.NotFound()
+    // }
+    // const isLike = await Favor.userLikeIt(id, type, ctx.auth.uid)
+    // 使用 Art.getDetail 简化上面代码 
+    const artDetail = await new Art(id, type).getDetail(ctx.auth.uid)
+    artDetail.art.setDataValue('like_status', artDetail.like_status)
+    // ctx.body = artDetail.art 
     ctx.body = {
-        fav_nums: art.fav_nums,
-        like_status: isLike
+        fav_nums: artDetail.art.fav_nums,
+        like_status: artDetail.like_status
     }
 })
 
-// 点赞列表
+// 用户的点赞列表
 router.get('/favor', new Auth().m, async ctx => {
     const uid = ctx.auth.uid
-    
+    ctx.body = await Favor.getMyClassicFavors(uid)
 })
 
 const getNextOrPrevious = async (index, way = 'next', uid) => {

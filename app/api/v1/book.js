@@ -4,7 +4,7 @@ const router = new Router({
     prefix: '/v1/book'
 })
 
-router.get('/latest', (ctx, next) => {
+router.get('/hot_list', (ctx, next) => {
     ctx.body = { key: "books" }
 })
 

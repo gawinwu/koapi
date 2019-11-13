@@ -4,7 +4,7 @@ const { sequelize } = require('../../core/db')
 const { Sequelize, Model, Op } = require('sequelize')
 const { Art } = require('./art')
 
-// 点赞业务表
+/** 点赞业务表 */
 class Favor extends Model {
     // 点赞业务逻辑处理
     static async like(art_id, type, uid) {
@@ -27,7 +27,7 @@ class Favor extends Model {
         })
     }
 
-    // 取消点赞业务逻辑处理
+    /**  取消点赞业务逻辑处理 */
     static async disLike(art_id, type, uid) {
         const favor = await Favor.findOne({
             where: {
@@ -49,7 +49,7 @@ class Favor extends Model {
         })
     }
 
-    // 是否点赞过
+    /** 用户是否点赞过 */
     static async userLikeIt(art_id, type, uid) {
         const favor = await Favor.findOne({
             art_id, type, uid
@@ -57,13 +57,13 @@ class Favor extends Model {
         return favor ? true : false
     }
 
-    // 点赞列表
+    /** 用户的点赞列表 */
     static async getMyClassicFavors(uid) {
         const arts = await Favor.findAll({
             where: {
                 uid,
                 type: {
-                    [Op.not]: 400 // 不等于400, 
+                    [Op.not]: 400 // 不等于400, app\lib\enum.js ArtType
                     // []里的key 可以是个表达式, 如 let a = 'abc'; [a] = '789'
                 }
             }
@@ -71,6 +71,7 @@ class Favor extends Model {
         if (!arts) {
             throw new global.errs.NotFound()
         }
+        return await Art.getList(arts)
     }
 }
 
