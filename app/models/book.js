@@ -3,6 +3,8 @@ const { Sequelize, Model } = require('sequelize')
 const axios = require('axios')
 const util = require('util')
 
+const { Favor } = require('./favor')
+
 class Book extends Model {
     constructor(id) {
         super()
@@ -12,6 +14,16 @@ class Book extends Model {
         const url = util.format(global.config.yushu.detailUrl, this.id)
         const detail = await axios.get(url)
         return detail.data
+    }
+
+    static async getMyFavorBookCount(uid) {
+        const count = await Favor.count({
+            where: {
+                type: 400,
+                uid
+            }
+        })
+        return count
     }
 
     // summary 是否获取简要信息
@@ -30,7 +42,7 @@ Book.init({
     },
     fav_nums: {
         type: Sequelize.INTEGER,
-        default: 0
+        defaultValue: 0
     }
 }, {
     sequelize,

@@ -15,6 +15,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     logging: true,
     timezone: '+08:00',
     define: {
+        charset: 'utf8',
         timestamps: true, // 是否自动添加 createdAt 、 updatedAt 字段
         paranoid: true, // 软删除， 是否添加 deletedAt 字段        
         createdAt: 'created_at',
