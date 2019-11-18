@@ -13,6 +13,7 @@ const catchError = async (ctx, next) => {
             throw error
         }
         
+         // 生成环境
         if (isHttpException) {
             ctx.body = {
                 msg: error.msg,

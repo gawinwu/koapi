@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+
 const {
     dbName,
     host,

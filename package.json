@@ -31,6 +31,11 @@
         "@validator": "app/validators/validator.js"
     },
     "devDependencies": {
-        "@types/sequelize": "^4.28.6"
+        "@types/sequelize": "^4.28.6",
+        "eslint": "^6.6.0",
+        "eslint-plugin-html": "^6.0.0",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-react": "^7.16.0",
+        "eslint-plugin-vue": "^6.0.1"
     }
 }

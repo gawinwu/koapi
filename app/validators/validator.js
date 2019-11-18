@@ -90,7 +90,7 @@ class TokenValidator extends KoiValidator {
     }
 }
 
-// token 是否为空检测
+// 是否为空检测
 class NotEmptyValidator extends KoiValidator {
     constructor() {
         super()
@@ -126,29 +126,29 @@ function checkArtType(vals) {
     }
 }
 
-class Checker {
-    /** 更麻烦的
-     * checkType , checkArtType 强行用类实现的方式
-     * const checker = new Checker(ArtType)
-     * this.validateType = checker.check.bind(checker)
-     */
-    constructor(type) {
-        this.enumType = type
-    }
+// class Checker {
+//     /** 更麻烦的
+//      * checkType , checkArtType 强行用类实现的方式
+//      * const checker = new Checker(ArtType)
+//      * this.validateType = checker.check.bind(checker)
+//      */
+//     constructor(type) {
+//         this.enumType = type
+//     }
 
-    check(vals) {
-        let type = vals.body.type || vals.path.type
-        if (!type) {
-            throw new Error('type是必须参数')
-        }
-        type = parseInt(type)
+//     check(vals) {
+//         let type = vals.body.type || vals.path.type
+//         if (!type) {
+//             throw new Error('type是必须参数')
+//         }
+//         type = parseInt(type)
 
-        if (!this.enumType.isThisType(type)) {
-            throw new Error('type参数不合法')
-        }
+//         if (!this.enumType.isThisType(type)) {
+//             throw new Error('type参数不合法')
+//         }
 
-    }
-}
+//     }
+// }
 
 class LikeValidator extends PositiveIntegerValidator {
     constructor() {
@@ -160,6 +160,23 @@ class ClassicValidator extends LikeValidator {
     // 功能相同，方便使用，直接继承 
 }
 
+class SearchValidator extends KoiValidator {
+    constructor() {
+        super()
+        this.q = [
+            new Rule('isLength', '搜索关键字不能为空', { min: 1, max: 16 })
+        ]
+        this.start = [
+            new Rule('isInt', '参数必须是正整数', { min: 0, max: 60000 }),
+            new Rule('isOptional', '', 0)
+        ]
+        this.count = [
+            new Rule('isInt', '参数必须是正整数', { min: 1, max: 20 }),
+            new Rule('isOptional', '', 20)
+        ]
+    }
+}
+
 
 module.exports = {
     PositiveIntegerValidator,
@@ -167,5 +184,7 @@ module.exports = {
     TokenValidator,
     NotEmptyValidator,
     LikeValidator,
-    ClassicValidator
+    ClassicValidator,
+    checkType,
+    SearchValidator
 }

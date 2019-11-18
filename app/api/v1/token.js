@@ -36,24 +36,20 @@ router.post('/', async (ctx) => {
         default:
             throw new global.errs.ParameterException('没有相应的处理函数')
     }
-    ctx.body = {
-        token
-    }
+    ctx.body = { token }
 })
 
 router.post('/verify', async (ctx) => {
     // 给前端检测token是否有效
     const v = await new NotEmptyValidator().validate(ctx)
     const relust = Auth.verifyToken(v.get('body.token'))
-    ctx.body = {
-        is_valid: relust
-    }
+    ctx.body = { is_valid: relust }
 })
 
 async function emailLogin(account, secret) {
     const user = await
         User.verifyEmailPassword(account, secret)
-    return token = generateToken(user.id, Auth.USER)
+    return generateToken(user.id, Auth.USER)
 }
 
 module.exports = router

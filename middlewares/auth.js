@@ -10,18 +10,21 @@ class Auth {
     }
     get m() {
 
-        // token检测
+        // token 检测
+        // token 开发者 传递令牌
+        // token body header
+        // HTTP 规定 身份验证机制 HttpBasicAuth
         return async (ctx, next) => {
-            const userToken = basicAuth(ctx.req)
+            const tokenToken = basicAuth(ctx.req)
             // ctx.req = Node原生的request对象
             // ctx.request = koa 对原生的封装
 
-            let errMsg = 'token不合法'
-            if (!userToken || !userToken.name) {
+            let errMsg = '无效的token'
+            if (!tokenToken || !tokenToken.name) {
                 throw new global.errs.Forbbiden(errMsg)
             }
             try {
-                var decode = jwt.verify(userToken.name, global.config.security.secretKey)
+                var decode = jwt.verify(tokenToken.name, global.config.security.secretKey)
             } catch (error) {
                 if (error.name == 'TokenExpiredError') {
                     errMsg = 'token已过期'
