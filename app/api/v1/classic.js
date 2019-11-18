@@ -100,6 +100,7 @@ const getNextOrPrevious = async (index, way = 'next', uid) => {
     const like = await Favor.userLikeIt(flow.art_id, flow.type, uid)
     art.setDataValue('index', flow.index)
     art.setDataValue('like_status', like)
+    // art.exclude = ['index','like_status']
     return art
 }
 

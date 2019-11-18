@@ -69,4 +69,27 @@ await art.decrement('fav_nums', { by: 1, transaction: t })
 // 所以这里需要使用 useScope = false 
 ```
 
+##### 在应用Model里使用 js内置的 toJSON() 序列化指定字段
+```
+test.1.js
+app\models\book-comment.js
+    // toJSON(){
+    //     return {
+    //       content:this.getDataValue('content'),
+    //       nums:this.getDataValue('nums'),
+    //     }
+    // }
+```
+
+##### 在Model基类原型上定义toJSON 全局过滤字段
+```
+core\db.js
+if(isArray(this.exclude)){...)
+
+测试:
+app\api\v1\classic.js
+art.exclude = ['index','like_status']
+```
+
+
 

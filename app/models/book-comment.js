@@ -10,12 +10,14 @@ class Comment extends Model {
             }
         })
         if (!comment) {
+            // 没有内容相同的评价 添加一个评价
             return await Comment.create({
                 book_id: bookID,
                 content,
                 nums: 1
             })
         } else {
+            // 有相同内容的评价，评价点赞数+1
             return await comment.increment('nums', {
                 by: 1
             })
@@ -39,6 +41,7 @@ class Comment extends Model {
     // }
 }
 
+// 过滤字段
 Comment.prototype.exclude = ['book_id', 'id']
 
 
@@ -49,8 +52,7 @@ Comment.init({
         type: Sequelize.INTEGER,
         defaultValue: 0
     },
-    book_id: Sequelize.INTEGER,
-    // exclude:['book_id','id']
+    book_id: Sequelize.INTEGER
 }, {
     sequelize,
     tableName: 'comment'
