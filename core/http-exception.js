@@ -77,7 +77,7 @@ class LikeError extends HttpException {
 class DislikeError extends HttpException {
     constructor(msg, errorCode) {
         super()
-        this.msg = msg || "你已取消点赞"
+        this.msg = msg || "你已取消点赞了"
         this.errorCode = errorCode || 60002
         this.code = 400
     }

@@ -19,9 +19,10 @@ class Art {
             throw new global.errs.NotFound()
         }
         const like = await Favor.userLikeIt(this.art_id, this.type, uid)
-        return { 
-            art, 
-            like_status: like }
+        return {
+            art,
+            like_status: like
+        }
     }
 
     /** 获取用户的点赞列表 下的 具体内容*/
@@ -94,7 +95,14 @@ class Art {
                 art = await Sentence.scope(scope).findOne(finder)
                 break;
             case 400:
-                // art = await Moive.findOne(finder)
+                // eslint-disable-next-line no-case-declarations
+                const { Book } = require('./book')
+                art = await Book.scope(scope).findOne(finder)
+                if (!art) {
+                    art = await Book.create({
+                        id: art_id
+                    })
+                }
                 break;
             default:
                 break;

@@ -40,7 +40,7 @@ class Favor extends Model {
         // sequelize事务处理, sequelize的坑： 注意删除事务用法与 create 异同
         return sequelize.transaction(async t => {
             await favor.destroy({ // 使用查询出来的记录对象进行删除操作 
-                force: false,  // force:true = 物理删除， false标记删除
+                force: true,  // force:true = 物理删除， false标记删除
                 transation: t
             })
             const art = await Art.getData(art_id, type, false)
@@ -52,7 +52,10 @@ class Favor extends Model {
     /** 用户是否点赞过 */
     static async userLikeIt(art_id, type, uid) {
         const favor = await Favor.findOne({
-            art_id, type, uid
+            where: {
+                art_id, type, uid
+            }
+
         })
         return favor ? true : false
     }
