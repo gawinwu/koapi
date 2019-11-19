@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { Sequelize, Model } = require('sequelize')
 const { unset, clone, isArray } = require('lodash')
 
@@ -13,7 +14,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     dialect: 'mysql',
     host,
     port,
-    logging: true,
+    logging: true, // 是否打印sql语句
     timezone: '+08:00',
     define: {
         charset: 'utf8',
@@ -45,18 +46,23 @@ Model.prototype.toJSON = function () {
     unset(data, 'created_at')
     unset(data, 'deleted_at')
 
+    // 替换静态文件相对路径为绝对路径
+    for (key in data) {
+        if (key === 'image') {
+            if (!data[key].startsWith('http'))
+                data[key] = global.config.host + data[key]
+        }
+    }
+
     // 给应用开发者指定排除字段
-    if(isArray(this.exclude)){
+    if (isArray(this.exclude)) {
         this.exclude.forEach(
-            (value)=>{
-                unset(data,value)
+            (value) => {
+                unset(data, value)
             }
         )
     }
-
-
     return data
-
 }
 
 module.exports = {

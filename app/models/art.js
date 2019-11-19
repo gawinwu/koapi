@@ -107,6 +107,11 @@ class Art {
             default:
                 break;
         }
+        // 已改为完整方案
+        // if (art && art.image) {
+        //     let imgUrl = art.dataValues.image
+        //     art.dataValues.image = global.config.host + imgUrl
+        // }
         return art
     }
 
