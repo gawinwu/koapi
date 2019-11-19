@@ -84,11 +84,20 @@ app\models\book-comment.js
 ##### 在Model基类原型上定义toJSON 全局过滤字段
 ```
 core\db.js
-if(isArray(this.exclude)){...)
+if(isArray(this.exclude)){...}
 
 测试:
 app\api\v1\classic.js
 art.exclude = ['index','like_status']
+```
+
+##### 静态文件处理完整方案
+```
+core\db.js
+for (key in data) {...}
+
+config\config.js
+host: 'http://localhost:3000/'
 ```
 
 
